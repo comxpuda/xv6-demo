@@ -1,0 +1,6 @@
+问题：gdb运行时：
+Python Exception <type 'exceptions.NameError'> Installation error: gdb._execute_unwinders function is missing
+解决方案：--data-directory 参数指定gdb安装目录
+/usr/local/opt/riscv-gnu-toolchain/bin/riscv64-unknown-elf-gdb --data-directory=/usr/local/Cellar/gdb/12.1/share/gdb
+
+
