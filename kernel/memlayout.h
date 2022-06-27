@@ -4,8 +4,8 @@
 // based on qemu's hw/riscv/virt.c:
 //
 // 00001000 -- boot ROM, provided by qemu
-// 02000000 -- CLINT
-// 0C000000 -- PLIC
+// 02000000 -- CLINT 我：局部中断，算是内部中断，标准是只规定了有两种，即使中断timer和软件中断software。局部中断连接在Core Local Interruptor (CLINT) 上。
+// 0C000000 -- PLIC  我：全局中断，也就是所说的外部中断，其他外设统统都是外部中断。外部中断连接在Platform-Level Interrupt Controller (PLIC)上  // 我：如图所示，CLINT和PLIC最大的区别在于，CLINT没有仲裁，包括software和Timer,一有中断马上响应（software中断怎么产生的：用软件直接写一个寄存器当作软件中断）。PLIC需要一个仲裁决定谁先中断，存在个优先级的问题。
 // 10000000 -- uart0 
 // 10001000 -- virtio disk 
 // 80000000 -- boot ROM jumps here in machine mode

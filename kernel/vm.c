@@ -432,3 +432,26 @@ copyinstr(pagetable_t pagetable, char *dst, uint64 srcva, uint64 max)
     return -1;
   }
 }
+
+// print out all valid ptes 
+// and corresponding physical address
+void
+vmprint(pagetable_t pt)
+{
+  printf("page table %p \n",pt);
+  pte_t pte;
+  for (int i = 0; i < 512; ++i) {
+    if(!((pte = pt[i]) & PTE_V)) continue;
+    pagetable_t pgtblv1 = (pagetable_t)PTE2PA(pte);
+    printf("..%d: pte %p pa %p\n",i,pte,pgtblv1);
+    for(int j=0;j < 512;++j){
+      if(!((pte = pt[j]) & PTE_V)) continue;
+      pagetable_t pgtblv2 = (pagetable_t)PTE2PA(pte);
+      printf(".. ..%d: pte %p pa %p\n",j,pte,pgtblv2);
+      for(int k = 0;k < 512;++k){
+        if(!((pte = pt[k]) & PTE_V)) continue;
+        printf(".. .. ..%d: pte %p pa %p\n",k,pte,PTE2PA(pte));
+      }
+    }
+  }
+}
